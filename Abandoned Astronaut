@@ -1,0 +1,704 @@
+// Name: Dhruv Sardana
+// Date: March 24, 2019
+// Purpose: The Abandoned Astronaut 
+import javax.swing.*;// library for Dialog Boxes
+import java.util.Date;// for the date and Time
+
+public class RPG
+{
+	public static void main (String args[])
+	{
+		new RPG ();
+
+	}
+	public RPG ()
+	{
+
+
+		JOptionPane.showMessageDialog (null, createImageIcon ("First.gif"), "WELCOME", JOptionPane.INFORMATION_MESSAGE);
+		StartingInstructions();
+		asciione();
+		asciiastro();// For instuctions
+		String menu= "\nMenu:\n"//Menu
+				+ "[1] New Game\n"
+				+ "[2] Exit\n"+ "\nEnter your desired choice";
+
+		slowPrint(menu,50);
+
+		//Choice Variable
+		int choice = IO.inputInt(": ");// variable choice thatke in input for the menu
+
+		menu(choice);
+
+		if (choice>2  || choice < 1) {// if choice is not applicable
+
+			System.out.println(" Sorry Inavalid Request !!!. Choose again");
+
+			choice = IO.inputInt(" Enter your desired choice:  ");
+
+			menu(choice);
+		}
+		if (choice == 1){
+
+			int tries = 0;
+
+			task1(tries);// if they start a new game, their first task
+			stars();
+
+		}
+	}
+
+	public void StartingInstructions() {// Instructions or Title
+		String instructions = "\t\tWELCOME TO MY GAME \n "+ " \n"+
+				"\t *** THE ABANDONED ASTRONAUT ***\n\t\t BY DHRUV SARDANA ";
+		stars();
+		slowPrint(instructions,40);
+	}
+
+
+	public static void slowPrint(String message, long millisPerChar)// Method for printing Slow
+	{
+		for (int i = 0; i < message.length(); i++)
+		{
+			System.out.print(message.charAt(i));
+
+			try
+			{
+				Thread.sleep(millisPerChar);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	public void backstory ()// Backstory
+	{
+		//Show a dialog asking the user to select from a combobox:
+		String [] possibleValues = {"Male", "Female", "Other"};
+		String selectedValue = (String) JOptionPane.showInputDialog (null,
+				"Select your Astronaut's Gender", "Input", JOptionPane.INFORMATION_MESSAGE, null,
+				possibleValues, possibleValues [0]);
+		String name1= IO.inputString("\nABANDONED ASTRONAUT is starting...........\n\nENTER YOUR ASTRONAUTS NAME: ");
+
+		JOptionPane.showMessageDialog (null, createImageIcon ("Sixth.jpg"), "THIS IS YOU "+name1, JOptionPane.INFORMATION_MESSAGE);
+		String bckstory="" + // Backstory String variable
+				"		\nHello "+ name1 +", you are an astronaut from GALAXY 3141.\nIt is a very advanced galaxy and therefore they accidently landed in MILKY WAY GALAXY in search of civilizatons like Humans. Heres a conversation between you and your Boss:\n"+ 
+				"\nBOSS>> Hello "+ name1+" Our pilots accidently left you on a planet called PLUTO"+
+				"\nYOU>> Hello sir, how am I going to come back home ?"+"\nBOSS>> First of all, you need to find your MAGICAL DISPLACEMENTER; There is a planet called Earth and I have contacted there scientists.\nThey told me that they are going to rescue you but only from the asteriod belt. You will have to face many obstacles before you can actually reach the asteriod belt."+
+				"\nThere are going to be tasks on each and every planet and using your MAGIC DISPLACEMENTER will automaically shift to the very next planet.\nOn pluto, you will find your MESSAGE RECIEVER which is going to help you understand the tasks";
+
+		slowPrint(bckstory,40);//Extra feature
+		Date date= new Date();// object 
+		String a = "\n\nThe Date and Time on Earth are: "+(date);// for printing slow
+		IO.printSlow(a,180);
+
+	}
+	//Menu choices
+	public void menu(int choice)
+	{
+		boolean exit = false;
+
+		//Which choice
+
+		if (choice == 1)
+		{
+			backstory();
+			exit = false;
+		}
+		else if (choice == 2)
+		{
+
+			char end = 'n';
+
+			end = IO.inputChar("DO YOU REALLY WANT TO EXIT THE GAME ? (y/n) ");
+			if (end == 'y') {
+				System.out.println("YOU ENDED THE GAME. THANKS FOR PLAYING :)");
+				exit = true;
+			}
+			else {
+
+				backstory();
+				int tries = 0;
+				task1(tries);
+			}
+		}
+	}
+
+
+
+
+	public void task1 (int tries) 
+	{
+		ascii1st();// Task 1
+		System.out.println("\t\n\n\n **** MESSAGE ALERT **** ");
+		String message1= "\n\n Hello, I m your MESSAGE RECIEVER and I m here to help you\n \u00a5 As u have a RADIO FREQUENCY DETECTOR(RFD).\n You need to detect the frequency with a guessing game. THE RFD gives you five chances to find the radio frequency between 1-20 KHz.\n If you guess the number correctly, You ll find the frequency for your MAGIC DISPLACEMENTER. "; 
+		slowPrint(message1,40);
+		JOptionPane.showMessageDialog (null, createImageIcon ("Third.gif"), "Lets Guess", JOptionPane.INFORMATION_MESSAGE);//DialogBox
+		asciitwo();
+		int rand = (int)(Math.random() * 20) + 1; //Random number
+		String a ="";
+		int answer=-1;
+
+		while (tries <5 && answer!=rand) {// its gonna give 5 tries every single time we play! I structured this game in a way so that the user cannot lose until they want to quit themselves
+			answer = IO.inputInt("\n\n What is the frequency ?  ");// taking in input for the frequency
+
+			// if they don't get the right answer
+			if (answer > rand) {
+				a = "\n You are a bit over\n";
+				slowPrint(a,40);
+			}
+			else if (answer < rand) {
+				a = "\n You are a bit less\n";
+				slowPrint(a,40);
+			}	 
+			tries ++; // tries increase
+
+		}
+
+		if (answer == rand) 
+		{
+
+			a = "You guessed the right frequency. Congrats on clearing your first task. You have your MAGIC DISPLACEMENTER\n\n";
+			slowPrint(a,40);
+			stars();
+			JOptionPane.showMessageDialog (null, createImageIcon ("Second.gif"), "MAGIC DISPLACEMENTER", JOptionPane.INFORMATION_MESSAGE);
+			task2();
+		}
+		else 
+		{
+			a = "\n Sorry, you couldnt guess it right.";
+			slowPrint(a, 40);
+			String end = IO.inputString("Do you want to quit? (y/n)");
+			if(end.equals("n"))
+				task1(0);
+			else
+				System.out.println("Goodbye");
+			stars();
+
+		}
+	}
+
+
+	public void task4() {
+		ascii3rd();
+		IO.printSlow("\n\n\t **** MESSAGE ALERT ****\n\n CONGRATS YOU ARE ON NEPTUNE! To go to the next planet YOU NEED TO \n PLAY A GAME OF ROCK PAPER SCISSORS ",3);
+
+
+
+		char playAgain = 'y';
+		System.out.println ("------ Rock, Paper, Scissors ------\n");
+
+		char user = userChoice ();
+		System.out.println ("You have selected " + user);
+		char comp = compChoice ();
+		System.out.println ("The computer has selected " + comp);
+		char win = winner (comp, user);
+		if (win == 'c')
+		{
+
+			System.out.println ("\nThe computer wins!  You lost!");
+
+
+			playAgain= IO.inputChar("Do you want to play again(y/n) ");
+			if (playAgain == 'n') {
+				System.out.println("BYEEEE!!!");
+				playAgain='n';
+			}
+			else {
+				stars();
+				task4();
+
+			}
+
+		}
+
+
+		else if (win == 'u')
+		{
+
+			System.out.println ("\nYou win! ");
+			playAgain = 'n';
+			stars();
+			task5();
+
+		}
+		else if (win==' ') {
+			System.out.println ("\nThere is a tie!");
+			stars();
+			task4();
+			playAgain = 'y';
+		}
+	}
+
+
+
+
+
+
+	protected static ImageIcon createImageIcon (String path)// Dialog Box method
+	{ //change the red to your class name
+		java.net.URL imgURL = RPG.class.getResource (path);
+		if (imgURL != null)
+		{
+			return new ImageIcon (imgURL);
+		}
+		else
+		{
+			System.err.println ("Couldn't find file: " + path);
+			return null;
+		}
+	}
+
+	public void task2 ()// Task 2
+	{
+		ascii2();
+		String a = "\n\n **** MESSAGE ALERT ****\n\n"
+				+ "OOPS Your MAGIC DISPLACEMENTER IS BROKEN, TO FIX YOUR DEVICE U NEED TO SOLVE A FEW MATH EQUATIONS.";
+		slowPrint(a,40);
+		JOptionPane.showMessageDialog (null, createImageIcon ("Fifth.gif"), "Oops I guess your remote is broken", JOptionPane.WARNING_MESSAGE);
+		asciithree();
+		int rand = (int)(Math.random() * 20) + 1; // First variable for the first random number  
+		int rand1 = (int)(Math.random() * 20) + 1;// Second variable for the second random number
+
+		int ques1 = IO.inputInt("\n\nWhat is "+rand+" + "+rand1+" ? ");
+		if (ques1== rand+rand1) {
+			IO.printSlow("Thats Correct\n\nSecond Question\n");
+			int ques2 = IO.inputInt("What is "+rand+" * "+rand1+" ? ");
+			if(ques2 == rand*rand1) {
+				IO.printSlow("Thats Correct\n\nThird Question\n");
+				int ques3 = IO.inputInt("What is ("+rand+" + "+rand1+ ") * ("+rand+" + "+rand1+") ? " );
+				if (ques3 == (rand+rand1)*(rand+rand1)) {
+					IO.printSlow("Thats Correct! Congrats");	
+					stars();
+					task4();			
+				}
+				else if (ques3 != (rand+rand1)*(rand+rand1)) {
+					IO.printSlow("Sorry! The answer you have entered is wrong.");
+					char end = IO.inputChar("Do you want to quit? (y/n)");
+					if (end == 'y') {
+						IO.printSlow("  Sorry, You LOST.");
+
+					}
+					else {
+						stars();
+						task2();
+					}
+				}
+			}
+			else if(ques2 != rand1 * rand)  {
+				IO.printSlow("Sorry! The answer you have entered is wrong.");
+				char end = IO.inputChar("Do you want to quit? (y/n)");
+				if (end == 'y') {
+					IO.printSlow("  Sorry, You LOST.");
+				}
+				else {
+					stars();
+					task2();
+				}
+			}
+		}
+		else if (ques1 != rand1 +rand ) {
+			IO.printSlow("Sorry! The answer you have entered is wrong.");
+			char end = IO.inputChar("Do you want to quit? (y/n)");
+			if (end == 'y') {
+				IO.printSlow("  Sorry, You LOST.");
+			}
+			else {
+				stars();
+
+				task2();
+
+			}
+
+
+
+		}
+	}
+
+
+
+	public boolean isValid (String c)
+	{
+		boolean valid = false;
+		if (c.equals("ROCK") || c.equals("rock") || c.equals("r") ||c.equals("R"))
+			valid = true;
+		else if (c.equals("PAPER") || c.equals("paper") || c.equals("p") ||c.equals("P"))
+			valid = true;
+		else if (c.equals("SCISSORS") || c.equals("scissors") || c.equals("s") ||c.equals("S"))
+			valid = true;
+		else 
+			valid = false;
+		return valid;
+	}
+
+
+	public char userChoice ()//User Choice
+	{
+		boolean valid = false;
+		String Choice = "";
+		while(valid == false)
+		{
+			System.out.println("\n-------- Options --------");
+			System.out.println("Rock, Paper or Scissors");
+			Choice = IO.inputString("\nEnter your choice: ");
+			valid = isValid(Choice);
+			System.out.println("");
+		}
+		if (Choice.equals("ROCK") || Choice.equals("rock") || Choice.equals("r") ||Choice.equals("R"))
+			return 'r';
+		else if (Choice.equals("PAPER") || Choice.equals("paper") || Choice.equals("p") ||Choice.equals("P"))
+			return 'p';
+		else
+			return's';
+	}
+
+
+	public char compChoice ()//Comp choice
+	{ 
+		char compchoice = ' ';
+		int rand = (int)(Math.random()*3+1);
+		if (rand == 1)
+			compchoice = 'r';
+		if (rand == 2)
+			compchoice = 's';
+		if (rand == 3)
+			compchoice = 'p';
+		return compchoice;
+	}
+
+
+	public char winner (char comp, char user)// Winning Code
+	{ 
+
+		if (comp == 'r' && user == 'p')
+			return 'u';
+		if (comp == 'p' && user == 's')
+			return 'u';
+		if (comp == 's' && user == 'r')
+			return 'u';
+
+		if (comp == 'p' && user == 'r')
+			return 'c';
+		if (comp == 's' && user == 'p')
+			return 'c';
+		if (comp == 'r' && user == 's')
+			return 'c';
+		else 
+			return ' ';
+	}
+
+	public void task5 ()
+	{
+		rules ();
+
+
+		System.out.println ();
+		int turn = 1;
+		boolean done = false;
+		int n = 1;
+		while (!done)
+		{
+			if (turn == 1)
+			{
+				done = humanTurn (n);
+				turn = 2;
+			}
+			else
+			{
+				done = aiTurn (n);
+				turn = 1;
+			}
+			n++;
+		}
+
+	}
+
+
+
+	public void rules ()
+	{ //Create a title
+		//Write out the fizz-buzz rules - see assignment 3
+		System.out.println("\n\nFizzBuzz is a children's game where you count from 1\r\n" + 
+				"to until the next player gets it wrong. Easy, right?\r\n" + 
+				"Here's the catch: instead of saying numbers divisible\r\n" + 
+				"by 3, say \"Fizz\". And instead of saying numbers\r\n" + 
+				"divisible by 5, say \"Buzz\". For numbers divisible by\r\n" + 
+				"both 3 and 5, say \"FizzBuzz\".\r\n" + 
+				"\"1, 2, Fizz, 4, Buzz\"...and so forth");
+	}
+
+
+	public String fBNum (int n)
+	{
+		String w;
+		if ( n%15 == 0)
+			w = "FizzBuzz";
+		else if (n%5 == 0)
+			w = "Buzz";
+		else if (n%3 == 0)
+			w = "Fizz";
+		else 
+			w = "" + n;
+		return w;
+	}
+
+
+
+	public boolean humanTurn (int n)
+	{ //n is the number we are currently on
+		//gets the right Fizz-Buzz number (done)
+		boolean a = false;
+		char again = 'y';
+		String right = fBNum (n);
+		//gets the user's Fizz-Buzz number (done)
+		String ans = IO.inputString ("Human>> ");
+		if(right.equals(ans)== false) {
+			a = true;
+			System.out.println("You lost. The AI won. The right no. is "+right);
+			again = IO.inputChar("Would u like to play again?(y/n) ");
+			if (again=='y') {
+				task5();
+			}
+			else {
+				System.out.print(" You Lost");
+			}
+		}
+		else 
+			a = false;
+		return a;
+
+	}
+
+
+
+	public boolean aiTurn (int n)
+	{ //n is the number we are currently on
+		//we want the ai to get it wrong occasionally
+		int prob = (int) (Math.random () * 5) + 1;
+		String right = fBNum (n);
+		if (prob==2) {
+			System.out.println(" AI>>"+(n+1));
+			System.out.println(" AI is wrong. The right fizz buzz number is "+right+ "  YOU Won");
+			task6();
+			return true;
+		}
+		else
+			System.out.println("AI>>"+ right);
+
+
+		return false;
+	}
+	public void task6() {
+		IO.printSlow ("You got three tries to answer the riddle!!\n\n");
+
+		String ans = IO.inputString("What room do ghosts avoid?  ");
+		int tries = 0;
+
+		while (!ans.equalsIgnoreCase ("living") && tries <3)
+		{
+			IO.printSlow("Nope. Try again");
+
+			ans = IO.inputString ("What room do ghosts avoid? ");
+			tries++;
+		}
+
+		if (ans.equalsIgnoreCase ("living")) {
+
+			System.out.println ("You got it");
+
+		}
+
+		else
+			System.out.println ("The answer was Living Room."); 
+	}
+
+
+	// all the ascii arts
+	public void asciione() {
+		IO.printSlow("\n\n  ______   __                                  __                                      __       \r\n" + 
+				" /      \\ |  \\                                |  \\                                    |  \\      \r\n" + 
+				"|  $$$$$$\\| $$____    ______   _______    ____| $$  ______   _______    ______    ____| $$      \r\n" + 
+				"| $$__| $$| $$    \\  |      \\ |       \\  /      $$ /      \\ |       \\  /      \\  /      $$      \r\n" + 
+				"| $$    $$| $$$$$$$\\  \\$$$$$$\\| $$$$$$$\\|  $$$$$$$|  $$$$$$\\| $$$$$$$\\|  $$$$$$\\|  $$$$$$$      \r\n" + 
+				"| $$$$$$$$| $$  | $$ /      $$| $$  | $$| $$  | $$| $$  | $$| $$  | $$| $$    $$| $$  | $$      \r\n" + 
+				"| $$  | $$| $$__/ $$|  $$$$$$$| $$  | $$| $$__| $$| $$__/ $$| $$  | $$| $$$$$$$$| $$__| $$      \r\n" + 
+				"| $$  | $$| $$    $$ \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$| $$  | $$ \\$$     \\ \\$$    $$      \r\n" + 
+				" \\$$   \\$$ \\$$$$$$$   \\$$$$$$$ \\$$   \\$$  \\$$$$$$$  \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$$      \r\n" + 
+				"                                                                                                \r\n" + 
+				"                                                                                                \r\n" + 
+				"                                                                                                \r\n" + 
+				"  ______               __                                                          __           \r\n" + 
+				" /      \\             |  \\                                                        |  \\          \r\n" + 
+				"|  $$$$$$\\  _______  _| $$_     ______    ______   _______    ______   __    __  _| $$_         \r\n" + 
+				"| $$__| $$ /       \\|   $$ \\   /      \\  /      \\ |       \\  |      \\ |  \\  |  \\|   $$ \\        \r\n" + 
+				"| $$    $$|  $$$$$$$ \\$$$$$$  |  $$$$$$\\|  $$$$$$\\| $$$$$$$\\  \\$$$$$$\\| $$  | $$ \\$$$$$$        \r\n" + 
+				"| $$$$$$$$ \\$$    \\   | $$ __ | $$   \\$$| $$  | $$| $$  | $$ /      $$| $$  | $$  | $$ __       \r\n" + 
+				"| $$  | $$ _\\$$$$$$\\  | $$|  \\| $$      | $$__/ $$| $$  | $$|  $$$$$$$| $$__/ $$  | $$|  \\      \r\n" + 
+				"| $$  | $$|       $$   \\$$  $$| $$       \\$$    $$| $$  | $$ \\$$    $$ \\$$    $$   \\$$  $$      \r\n" + 
+				" \\$$   \\$$ \\$$$$$$$     \\$$$$  \\$$        \\$$$$$$  \\$$   \\$$  \\$$$$$$$  \\$$$$$$     \\$$$$       \r\n" + 
+				"                                                                                                \r\n" + 
+				"                                                                                                \r\n" + 
+				"                                                                                 ",1);
+	}
+	public void asciitwo() {
+		IO.printSlow("   ______                            __            ____   __                 \r\n" + 
+				"  / ____/__  __ ___   _____ _____   / /_ ____     / __ ) / /___   _____ _____\r\n" + 
+				" / / __ / / / // _ \\ / ___// ___/  / __// __ \\   / __  |/ // _ \\ / ___// ___/\r\n" + 
+				"/ /_/ // /_/ //  __/(__  )(__  )  / /_ / /_/ /  / /_/ // //  __/(__  )(__  ) \r\n" + 
+				"\\____/ \\__,_/ \\___//____//____/   \\__/ \\____/  /_____//_/ \\___//____//____/  \r\n" + 
+				"                                                                             ",1);
+	}
+	public void asciithree()
+	{
+		IO.printSlow("     ______  _______          ____   _________________  ____   ____        _________________       _____            _____            ____  _____   ______   \r\n" + 
+				"    |      \\/       \\    ____|\\   \\ /                 \\|    | |    |      /                 \\ ____|\\    \\          |\\    \\   _____  |    ||\\    \\ |\\     \\  \r\n" + 
+				"   /          /\\     \\  /    /\\    \\\\______     ______/|    | |    |      \\______     ______//     /\\    \\         | |    | /    /| |    | \\\\    \\| \\     \\ \r\n" + 
+				"  /     /\\   / /\\     ||    |  |    |  \\( /    /  )/   |    |_|    |         \\( /    /  )/  /     /  \\    \\        \\/     / |    || |    |  \\|    \\  \\     |\r\n" + 
+				" /     /\\ \\_/ / /    /||    |__|    |   ' |   |   '    |    .-.    |          ' |   |   '  |     |    |    |       /     /_  \\   \\/ |    |   |     \\  |    |\r\n" + 
+				"|     |  \\|_|/ /    / ||    .--.    |     |   |        |    | |    |            |   |      |     |    |    |      |     // \\  \\   \\ |    |   |      \\ |    |\r\n" + 
+				"|     |       |    |  ||    |  |    |    /   //        |    | |    |           /   //      |\\     \\  /    /|      |    |/   \\ |    ||    |   |    |\\ \\|    |\r\n" + 
+				"|\\____\\       |____|  /|____|  |____|   /___//         |____| |____|          /___//       | \\_____\\/____/ |      |\\ ___/\\   \\|   /||____|   |____||\\_____/|\r\n" + 
+				"| |    |      |    | / |    |  |    |  |`   |          |    | |    |         |`   |         \\ |    ||    | /      | |   | \\______/ ||    |   |    |/ \\|   ||\r\n" + 
+				" \\|____|      |____|/  |____|  |____|  |____|          |____| |____|         |____|          \\|____||____|/        \\|___|/\\ |    | ||____|   |____|   |___|/\r\n" + 
+				"    \\(          )/       \\(      )/      \\(              \\(     )/             \\(               \\(    )/              \\(   \\|____|/   \\(       \\(       )/  \r\n" + 
+				"     '          '         '      '        '               '     '               '                '    '                '      )/       '        '       '   \r\n" + 
+				"                                                                                                                              '                             ",1);
+	}
+	public void asciifourth()
+	{
+		IO.printSlow("\r\n" + 
+				"   ___             __     ___                         ____      _                        \r\n" + 
+				"  / _ \\ ___  ____ / /__  / _ \\ ___ _ ___  ___  ____  / __/____ (_)___  ___ ___   ____ ___\r\n" + 
+				" / , _// _ \\/ __//  '_/ / ___// _ `// _ \\/ -_)/ __/ _\\ \\ / __// /(_-< (_-</ _ \\ / __/(_-<\r\n" + 
+				"/_/|_| \\___/\\__//_/\\_\\ /_/    \\_,_// .__/\\__//_/   /___/ \\__//_//___//___/\\___//_/  /___/\r\n" + 
+				"                                  /_/                                                    \r\n" + 
+				"");
+	}
+	public void asciiastro() {
+		IO.printSlow("\n\n/  _/__    / __/__  ___ ________   ___  ___    ___  ___  ___\r\n" + 
+				" _/ // _ \\  _\\ \\/ _ \\/ _ `/ __/ -_) / _ \\/ _ \\  / _ \\/ _ \\/ -_)\r\n" + 
+				"/___/_//_/ /___/ .__/\\_,_/\\__/\\__/ /_//_/\\___/  \\___/_//_/\\__/\r\n" + 
+				" _______ ____ /_// /  ___ ___ _____  __ _____  __ __\r\n" + 
+				"/ __/ _ `/ _ \\  / _ \\/ -_) _ `/ __/ / // / _ \\/ // /\r\n" + 
+				"\\__/\\_,_/_//_/ /_//_/\\__/\\_,_/_/    \\_, /\\___/\\_,_/\r\n" + 
+				"  ______ ___ _____ ___ ______      /___/\r\n" + 
+				" (_-< _ `/ // / -_) -_)_ / -_)   ....\r\n" + 
+				"/___|_, /\\_,_/\\__/\\__//__|__/    /   `.\r\n" + 
+				"     /_/                        |      `,\r\n" + 
+				"                                 -.   ,'\r\n" + 
+				"                                   `-/ \\\r\n" + 
+				"                                  ,'    ;\r\n" + 
+				"                                ,'     /      ____\r\n" + 
+				"                        ______,i     __-  ,'''__  `._\r\n" + 
+				"                       /        `-,-'  `-+ /''XX`-.. `.\r\n" + 
+				"                      /    ,'-._    ``-.i,'XXXXXXXX`.  :\r\n" + 
+				"                     /  .--  ._ `-,_     \\XXXXXXXXXX/ |\r\n" + 
+				"                     |   `.  `.  /XX`..   \\XXXXXXXX| .'\r\n" + 
+				"                   ,'|  .i> `. .'XXXXXX/-. -._XXX_/ ,'\r\n" + 
+				"                 ,'  ',.:>_.'','XXXXXX/  ,`-. `. _,'\\  _\r\n" + 
+				"               ,'    /   _ `./XXXXXX,'  / /  `. '.  ,+' `.\r\n" + 
+				"             ,'     /   -_` /XXXXXX/  ,',',- , `.<-'    ,'\r\n" + 
+				"           ,'      /   :- ;'XXXXXX/  /,',' ,',  ,-.   ,'\r\n" + 
+				"         ,'       :  ._ `,'XXXXXX/ ,'/,'_,',',-'XX,-,'\r\n" + 
+				"       ,'        _ `-.  /XXXXXXX/ /,;',',-','XXX,:`\r\n" + 
+				"      `    _,'-,- `-..i`.XXXXX,' /`/,',',-'XX_X'  `,\r\n" + 
+				"       `.,'   ,'      \\  `=.X,',' ;',','XX,,'\\\\  ,:\r\n" + 
+				"            ,'`.       |,;' `-.  - i,'XXX,'    -' |\r\n" + 
+				"          ,'    `    ,' .i     `-,'XXXX,'`.    ,-'\r\n" + 
+				"         /         ,' ,'  `-..    ;-,,;'   `,,'\r\n" + 
+				"       ,'    `.  ,' ,-        \\ ,'  ,:    ,'\r\n" + 
+				"      |        ,' ,'       .  ,'  ,'  `-<'\r\n" + 
+				"    ,-._     ,' ,'     -.  ,-'  ,'\r\n" + 
+				"  ,'       ,'_,'   _    ,`'    |\r\n" + 
+				" \\       ,','       `,-:    _,/\r\n" + 
+				" \\     ,' '       ,-'   --''\r\n" + 
+				"  '`-<' ,'   \\ ,-'\r\n" + 
+				"        |    ,'\r\n" + 
+				"        \\  _'\r\n" + 
+				"         '-",1);
+	}
+	public void ascii1st() {
+		IO.printSlow("8 |_|#|_|#|_|#|_|#|\r\n" + 
+				"7 |#|_|#|_|#|_|#|_|\r\n" + 
+				"6 |_|#|_|#|_|#|_|#|\r\n" + 
+				"5 |#|_|#|_|#|_|#|_|\r\n" + 
+				"4 |_|#|_|#|_|#|_|#|\r\n" + 
+				"3 |#|_|#|_|#|_|#|_|\r\n" + 
+				"2 |_|#|_|#|_|#|_|#|\r\n" + 
+				"1 |#|_|#|_|#|_|#|_|\r\n" + 
+				"   a b c d e f g h",1);
+	}
+
+	public void ascii2()
+	{
+		IO.printSlow("                                              .                                                                                                  .,,.          \r\n" + 
+				"                                                                                 ...,                                                                          \r\n" + 
+				"                                                                                   .,                                                                          \r\n" + 
+				"                                                                                 .,.                                                                           \r\n" + 
+				"                                                                                .,,...                                                                         \r\n" + 
+				"                                                                                                                                                               \r\n" + 
+				".                                                                                                                                                              \r\n" + 
+				"                                                                                                                                                               \r\n" + 
+				".,.                                                                                                                                                            \r\n" + 
+				".,                                                                                      .                                                                      \r\n" + 
+				"                                                                                     ........                                                                  \r\n" + 
+				"             ,////((*                      ...                                          .                                                                      \r\n" + 
+				"           ,(*  ,////((.                 ..   ..                                        .                                                                      \r\n" + 
+				"          ,(///*/(###(##.       .,,.     .    ..                                                                                                               \r\n" + 
+				"          *((//(#%%%%%%%*   .//,,*(///,  ..  ..                            ...,,,*,,**,*,*****,****/****/*,   .,****,,.       .,,,,,,,.                        \r\n" + 
+				"          *((((#%%%&&&&%,  ,/,,..,///(/   ....                          ,*,,,,,,,,,,,,,,,,,,,,,,*/*, .****/(////****///.    .*/////**//*          ,/(((/,      \r\n" + 
+				"          *((((#%%&&&&%(  **,.....*(//(,           ,,,,***,,.          ,.                      ./***,,*//((/(*.....***/,   .*.....,,****       *(*..,/////(,   \r\n" + 
+				"         .*.(#((#%%&%#/  **.......,(///*         ...   .,,,,,,.       .*.                      ,//***/#######(.  ..***/,    ,      .*/*/.     /(/*,.,/(((((#(  \r\n" + 
+				"         ,,.../(####(*. **,.......,(////       .,.     ...,,,,*,      .*.                      ,////(###%%%%#(.  ..***/,   .*      .***/,    *#(///((%%%%%#%%* \r\n" + 
+				"         *,....../(///*./,........,(////.      ,.      ....**,,*, .   .,.                      .(///(##%%%%%%/   ..***//////*.......*/*/,    /(((((#%&&&&&&&%( \r\n" + 
+				"         *,......,*(///(*,.....,,,,////(.     ,..     ......,*,,*,  . ..,,,,,,,,,,,.       .*,***(///##%%%%%(    .,//////////.......*/*/*.   ,#(((#%&&&&&&&&&, \r\n" + 
+				"         /,......,,/////,,,,,,,,,,,/(//(,   .,..  ..**,......*,,,*,.. ............,,       .*,,,,./((((####*.    .......,,,,,.......*/***.    *##((%&&&&&&&&/  \r\n" + 
+				"         /,.....,,,,/(//,,,,,,,,,,,/(//(,  .*,   .,*,,**,.....*,,,*.. ............*,       .*,,,,   .,(*..*,.    ...................*****.     ./%##%%&&&&%,   \r\n" + 
+				"         /,..,,,,,,,,/(*,,,,,,,,,,,/(//(,  ,,.. .,*,,*,.,.....,*,,,,..............**       .*,,*,     .  .*,.    ...................*/***.       ,#%%%%%%(.    \r\n" + 
+				"         *,,,,,,,**,,,,,,,,,*/*,,,,/(//(, .,.....*****.,,*.....*,,,*,  ...........**       .*,,,,    .   .*,.    ...................*/*/*.           /.        \r\n" + 
+				"         *,,,,,,(/(*,,,,,,,(////,,,*(//(, ,.   ................,,,,,*..  ....    .*,       .*,,,,     .  .*,.    ..,////****,.......*/***.                     \r\n" + 
+				"         **,,,,*(///,,,,,,/(////,,,*(///*.,.   ................,*,,,*,           .*,       .*,,,,      . .*,.......*****   .,.......****,                      \r\n" + 
+				"         **,,,,*(//(,,,,,,/((/*/,,,,/////,,.  ..................**,,,,           .*,       .*,,,,      . .,,.......***/*   .,.......***/,                      \r\n" + 
+				"         .//(///(, //*****/(. .(,....,*,.,......,*,,,.   ,,.....,*,,,*.          .*.       .*,,*,       ..,,.......*/***   .*.......***/.                      \r\n" + 
+				"                          .             .,......*,,*     .,......*,,,*.          .,.       .*,,,,       . ,,.......//*     .*.......*/.                        \r\n" + 
+				"                                        .......,*,*,     .*......*,,,*.          .,,,,,,,,,,**,           .*********.      .*********                          \r\n" + 
+				"                                  .........,,.,,*,.       *,.....,***,.                                                        ......              .,,,.       \r\n" + 
+				"                            .    .,,,,,,,,.                  .....                                                                                  ,,,.       \r\n" + 
+				"                                 .,,,****,.                                                                                                         ,..,,      \r\n" + 
+				"                             ..  ..,,***,.                                                                                                          .,,.       \r\n" + 
+				"                               .....,,,,                                                                                                                       \r\n" + 
+				"                                  ...                                                                                                                          \r\n" + 
+				"                                                                                                                                                               \r\n" + 
+				"                                                                                                                                                               \r\n" + 
+				"                                                                                                                                                               \r\n" + 
+				"                                                                     .,                                                                                        \r\n" + 
+				"                                                                    ...                                                                                        \r\n" + 
+				"                                                                      ,                                                                                        \r\n" + 
+				"                              .,...                                   .. ",1);
+	}
+	public void ascii3rd() {
+		IO.printSlow("$$$$$$$$$$$$$$$$$$$$$$$$$\r\n" + 
+				"$$$$$$$$$$$$$$$$$$$$$$$$$\r\n" + 
+				"$$$$$'`$$$$$$$$$$$$$'`$$$\r\n" + 
+				"$$$$$$  $$$$$$$$$$$  $$$$\r\n" + 
+				"$$$$$$$  '$/ `/ `$' .$$$$\r\n" + 
+				"$$$$$$$$. i  i  /! .$$$$$\r\n" + 
+				"$$$$$$$$$.--'--'   $$$$$$\r\n" + 
+				"$$^^$$$$$'        J$$$$$$\r\n" + 
+				"$$$   ~\"\"   `.   .$$$$$$$\r\n" + 
+				"$$$$$e,      ;  .$$$$$$$$\r\n" + 
+				"$$$$$$$$$$$.'   $$$$$$$$$\r\n" + 
+				"$$$$$$$$$$$$.    $$$$$$$$\r\n" + 
+				"$$$$$$$$$$$$$     $by&TL$",1);
+	}
+	public void stars()
+	{
+		int i=0;
+		do {
+			System.out.print("\t* ");
+			i++;
+		}while(i<=15);
+		System.out.print("\n\n");
+	}
+}
